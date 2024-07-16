@@ -18,6 +18,7 @@ Route::get('/contact', function () {
 })->name('contact'); 
 Route::post('/s2', function () {
   $data = request()->all(); 
+  return "Data received successfully! Name: $name, Email: $email, Subject: $subject, Message: $message"; 
 
   $validator = Validator::make($data, [
     'name' => 'required|string|max:255',
@@ -35,7 +36,6 @@ Route::post('/s2', function () {
   $subject = $data['subject'];
   $message = $data['message'];
 
-  return "Data received successfully! Name: $name, Email: $email, Subject: $subject, Message: $message"; 
 });
 
 
