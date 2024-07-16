@@ -1,10 +1,20 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ExampleController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('CV', function () {
+  return view('CV');
+});
+Route::get('login', function () {
+  return view('login');
+});
+
+
+
 // Route::get('cars/{id?}', function ($id=0) {
 //     return "car number is ".$id;
 // });->where([
@@ -52,29 +62,53 @@ Route::get('/', function () {
 
 // //task 2
 
-Route::prefix('Accounts')->group(function(){
-    Route::get('admin',function(){
-        return "Account admin";
-    });
+// Route::prefix('Accounts')->group(function(){
+//     Route::get('admin',function(){
+//         return "Account admin";
+//     });
 
-    Route::get('user',function(){
-        return "Account user";
-    });
+//     Route::get('user',function(){
+//         return "Account user";
+//     });
 
-});
+// });
 
-//part 2
+// //part 2
 
-Route::prefix('Cars')->group(function () {
-    Route::prefix('USA')->group(function () {
-      Route::get('{carname}', function ($carname) {
-        return "USA $carname";
-      });
-    });
+// Route::prefix('Cars')->group(function () {
+//     Route::prefix('USA')->group(function () {
+//       Route::get('{carname}', function ($carname) {
+//         return "USA $carname";
+//       });
+//     });
   
-    Route::prefix('GER')->group(function () {
-      Route::get('{carname}', function ($carname) {
-        return "GER $carname";
-      });
-    });
-  });
+//     Route::prefix('GER')->group(function () {
+//       Route::get('{carname}', function ($carname) {
+//         return "GER $carname";
+//       });
+//     });
+//   });
+//fallback code:
+// Route::fallback(function(){
+//   return redirect('/');
+// });
+
+Route::get('link', function () {
+  $url=route('w');
+  return "<a href='$url'>Go to welcome</a>";
+});
+Route::get('welcome', function () {
+  return "welcome to laravel";
+})->name('w');
+
+// Route::get('login',function(){
+//   return view('login');
+// });
+Route::post('/s1', function () {
+  
+  return "data submitted successfully";
+
+})->name('submit');
+
+
+
