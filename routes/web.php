@@ -9,9 +9,37 @@ Route::get('/', function () {
 Route::get('CV', function () {
   return view('CV');
 });
-Route::get('login', function () {
-  return view('login');
+// Route::get('login', function () {
+//   return view('login');
+// });
+
+Route::get('/contact', function () { 
+  return view('logintask');
+})->name('contact'); 
+Route::post('/s2', function () {
+  $data = request()->all(); 
+
+  $validator = Validator::make($data, [
+    'name' => 'required|string|max:255',
+    'email' => 'required|email',
+    'subject' => 'required|string|max:255',
+    'message' => 'required|string' 
+  ]);
+
+  if ($validator->fails()) {
+    return back()->withErrors($validator); 
+  }
+
+  $name = $data['name'];
+  $email = $data['email'];
+  $subject = $data['subject'];
+  $message = $data['message'];
+
+  return "Data received successfully! Name: $name, Email: $email, Subject: $subject, Message: $message"; 
 });
+
+
+
 
 
 
@@ -101,14 +129,9 @@ Route::get('welcome', function () {
   return "welcome to laravel";
 })->name('w');
 
-// Route::get('login',function(){
-//   return view('login');
-// });
-Route::post('/s1', function () {
+
+// Route::post('/s1', function () {
   
-  return "data submitted successfully";
+//   return "data submitted successfully";
 
-})->name('submit');
-
-
-
+// })->name('submit');
