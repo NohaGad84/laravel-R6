@@ -2,41 +2,36 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Http\Controllers\CarController;
+use App\Http\Controllers\ClasseController;
 
-Route::get('CV', function () {
-  return view('CV');
-});
-// Route::get('login', function () {
-//   return view('login');
+Route::get('/logintask', [ExampleController::class,'logintask']);
+Route::post('data1', [ExampleController::class,'receive'])->name('data');
+
+// Route::get('cv', [ExampleController::class,'cv']);
+
+// Route::get('',function(){
+// return view('hello');
+// });
+// Route::get('cars/create',[CarController::class,'create'])->name('cars.store');
+// Route::post('cars', [CarController::class,'store'])->name('cars.store');
+
+Route::get('classes/create',[ClasseController::class,'create'])->name('classes.store');
+Route::post('classes', [ClasseController::class,'store'])->name('classes.store');
+
+// Route::get('/', function () {
+//     return view('welcome');
 // });
 
-Route::get('/contact', function () { 
-  return view('logintask');
-})->name('contact'); 
-Route::post('/s2', function () {
-  $data = request()->all(); 
-  return "Data received successfully! Name: $name, Email: $email, Subject: $subject, Message: $message"; 
-
-  $validator = Validator::make($data, [
-    'name' => 'required|string|max:255',
-    'email' => 'required|email',
-    'subject' => 'required|string|max:255',
-    'message' => 'required|string' 
-  ]);
-
-  if ($validator->fails()) {
-    return back()->withErrors($validator); 
-  }
-
-  $name = $data['name'];
-  $email = $data['email'];
-  $subject = $data['subject'];
-  $message = $data['message'];
-
+// Route::get('CV', function () {
+//   return view('CV');
+// });
+Route::get('login', function () {
+  return view('login');
 });
+
+ 
+
 
 
 
@@ -121,13 +116,13 @@ Route::post('/s2', function () {
 //   return redirect('/');
 // });
 
-Route::get('link', function () {
-  $url=route('w');
-  return "<a href='$url'>Go to welcome</a>";
-});
-Route::get('welcome', function () {
-  return "welcome to laravel";
-})->name('w');
+// Route::get('link', function () {
+//   $url=route('w');
+//   return "<a href='$url'>Go to welcome</a>";
+// });
+// Route::get('welcome', function () {
+//   return "welcome to laravel";
+// })->name('w');
 
 
 // Route::post('/s1', function () {
