@@ -10,7 +10,14 @@ class ClasseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    
+    public function index()
+    {
+        //get all cars from database
+        //return view all cars , carsdata
+        //select.*.from cars;
+        $classes= Classe::get();
+        return view ('classes',compact('classes'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -26,30 +33,36 @@ class ClasseController extends Controller
     public function store(Request $request)
     {
     //   dd($request);
-    $classname= 'roses';
-    $capacity= '20';
-    $is_fulled= true;
-    $price= 2000;
-    $time_from=8;
-    $time_to=3;
-    Classe::create([
-    'classname'=> $classname,
-    'capacity'=>20,
-    'is_fulled'=> $is_fulled,
-    'price'=> 2000,
-    'time_from'=> $time_from,
-    'time_to'=> $time_to,
+    // $classname= 'roses';
+    // $capacity= 20;
+    // $is_fulled= true;
+    // $price= 2000;
+    // $time_from=8;
+    // $time_to=3;
+   
 
-]);
-return "Data added successfully";
-    }
+
+Classe::create([
+         'classname'=>$request->classname,
+            'capacity'=>$request->capacity,
+            'is_fulled'=>isset($request->is_fulled),
+            'price'=>$request->price,
+            'time_from'=>$request->time_from,
+            'time_to'=>$request->time_to,
+
+    ]);
+    
+    return "Data added successfully";
+        }
+
+
 
     /**
      * Display the specified resource.
      */
      function show(string $id)
     {
-        //
+       
     }
 
     /**
@@ -57,7 +70,8 @@ return "Data added successfully";
      */
      function edit(string $id)
     {
-        //
+        $classe= Classe::findOrFail($id);
+        return view('edit_class', compact('classe'));
     }
 
     /**

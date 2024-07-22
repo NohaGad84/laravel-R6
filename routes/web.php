@@ -13,11 +13,16 @@ Route::post('data1', [ExampleController::class,'receive'])->name('data');
 // Route::get('',function(){
 // return view('hello');
 // });
-// Route::get('cars/create',[CarController::class,'create'])->name('cars.store');
-// Route::post('cars', [CarController::class,'store'])->name('cars.store');
 
-Route::get('classes/create',[ClasseController::class,'create'])->name('classes.store');
+Route::get('cars',[CarController::class,'index']);
+Route::get('cars/create',[CarController::class,'create']);
+Route::post('cars', [CarController::class,'store'])->name('cars.store');
+Route::get('cars/{id}',[CarController::class,'edit'])->name('cars.edit');
+
+Route::get('classes', [classeController::class,'index']);
+Route::get('classes/create', [ClasseController::class,'create']);
 Route::post('classes', [ClasseController::class,'store'])->name('classes.store');
+Route::get_class('classes/{id}',[ClasseController::class,'edit'])->name('classes.edit');
 
 // Route::get('/', function () {
 //     return view('welcome');
