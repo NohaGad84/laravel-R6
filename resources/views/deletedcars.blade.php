@@ -33,8 +33,7 @@
               <th scope="col">show</th>
               <th scope="col">Published</th>
               <th scope="col">Edit</th>
-
-              <th scope="col">Delete</th>
+              <th scope="col">permenantly Deleted</th>
 
 
             </tr>
@@ -48,7 +47,6 @@
               <td>{{$car['published'] ? 'Yes':'No'}}</td>
               <td><a href="{{route('cars.edit',$car['id'])}}">Edit</a></td>
               <td><a href="{{route('cars.show',$car['id'])}}">Details</a></td>
-
               <td>
               <a href="{{ route('cars.destroy', $car->id) }}" onclick="event.preventDefault(); if (confirm('Are you sure?')) { document.getElementById('delete-form-{{ $car->id }}').submit(); }">Delete</a>
               <form id="delete-form-{{ $car->id }}" action="{{ route('cars.destroy', $car->id) }}" method="POST" style="display: none;">

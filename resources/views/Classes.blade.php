@@ -31,8 +31,13 @@
               <th scope="col">Capacity</th>
               <th scope="col">Is Fulled</th>
               <th scope="col">Price</th>
+
               <th scope="col">Time from</th>
               <th scope="col">Time To</th>
+              <th scope="col">Edit</th>
+              <th scope="col">Show</th>
+              <th scope="col">Delete</th>
+
 
             </tr>
           </thead>
@@ -46,7 +51,14 @@
               <td>{{$classe['time_from']}}</td>
               <td>{{$classe['time_to']}}</td>
               <td><a href="{{route('classes.edit',$classe['id'])}}">Edit</a></td>
-
+              <td><a href="{{route('classes.show',$classe['id'])}}">Details</a></td>
+              <td>
+              <a href="{{ route('classes.destroy', $classe->id) }}" onclick="event.preventDefault(); if (confirm('Are you sure?')) { document.getElementById('delete-form-{{ $classe->id }}').submit(); }">Delete</a>
+              <form id="delete-form-{{ $classe->id }}" action="{{ route('classes.destroy', $classe->id) }}" method="POST" style="display: none;">
+               @csrf
+              @method('DELETE')
+              </form>
+              </td>
             </tr>
             @endforeach
             

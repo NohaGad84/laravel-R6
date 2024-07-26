@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Car;
 
+use Illuminate\Http\RedirectResponse;
+
 class CarController extends Controller
 {
     /**
@@ -34,14 +36,14 @@ class CarController extends Controller
     {
 
 
-Car::create([
-'cartitle'=>$request->cartitle,
+    Car::create([
+        'cartitle'=>$request->cartitle,
         'description'=>$request->description,
         'price'=>$request->price,
         'published'=>isset($request->published),
 ]);
 
-return "Data added successfully";
+        return "Data added successfully";
     }
 
     /**
@@ -49,7 +51,8 @@ return "Data added successfully";
      */
     public function show(string $id)
     {
-        //
+        $car= Car::findOrFail($id);
+        return view('car_details', compact('car'));   
     }
 
     /**
@@ -68,14 +71,27 @@ return "Data added successfully";
      */
     public function update(Request $request, string $id)
     {
-        //
-    }
+        $data=[
+        'cartitle'=>$request->cartitle,
+        'description'=>$request->description,
+        'price'=>$request->price,
+        'published'=>isset($request->published),
+];
+        Car::where('id',$id)->update($data);
+        return redirect()->route('cars.index');
+        }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Car $car): RedirectResponse
     {
-        //
+        $car->delete(); 
+        return redirect()->route('cars.index');
     }
+    public function showDeleted(){
+        $cars=Car::onlyTrashed()->get();
+        return view ('deletedcars', compact('cars'));
+    }
+
 }

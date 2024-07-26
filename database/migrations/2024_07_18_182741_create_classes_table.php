@@ -19,6 +19,8 @@ return new class extends Migration
             $table->float('price');
             $table->time('time_from');
             $table->time('time_to');
+            $table->softDeletes();
+
             $table->timestamps();
         });
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Classe;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class ClasseController extends Controller
 {
@@ -62,7 +63,8 @@ Classe::create([
      */
      function show(string $id)
     {
-       
+        $classe= Classe::findOrFail($id);
+        return view('classe_details', compact('classe')); 
     }
 
     /**
@@ -79,14 +81,28 @@ Classe::create([
      */
      function update(Request $request, string $id)
     {
-        //
-    }
+$data=[
+    'classname'=>$request->classname,
+    'capacity'=>$request->capacity,
+    'is_fulled'=>isset($request->is_fulled),
+    'price'=>$request->price,
+    'time_from'=>$request->time_from,
+    'time_to'=>$request->time_to,
+
+];
+Classe::where('id',$id)->update($data);
+return redirect()->route('classes.index');    }
 
     /**
      * Remove the specified resource from storage.
      */
-     function destroy(string $id)
+    public function destroy(Classe $classe): RedirectResponse
     {
-        //
+        $classe->delete(); 
+        return redirect()->route('classes.index');
+    }
+    public function showDeleted(){
+        $classes= Classe::onlyTrashed()->get();
+        return view ('deletedclasses', compact('classes'));
     }
 }

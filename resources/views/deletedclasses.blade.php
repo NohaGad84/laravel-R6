@@ -23,40 +23,42 @@
   <main>
     <div class="container my-5">
       <div class="bg-light p-5 rounded">
-        <h2 class="fw-bold fs-2 mb-5 pb-2">All Cars</h2>
+        <h2 class="fw-bold fs-2 mb-5 pb-2">All Classes</h2>
         <table class="table table-hover">
           <thead>
             <tr class="table-dark">
-              <th scope="col">Car Title</th>
+              <th scope="col">Class Name</th>
+              <th scope="col">Capacity</th>
+              <th scope="col">Is Fulled</th>
               <th scope="col">Price</th>
-              <th scope="col">Description</th>
-              <th scope="col">show</th>
-              <th scope="col">Published</th>
-              <th scope="col">Edit</th>
 
-              <th scope="col">Delete</th>
+              <th scope="col">Time from</th>
+              <th scope="col">Time To</th>
+              <th scope="col">Edit</th>
+              <th scope="col">Show</th>
+              <th scope="col"> Permenantly Deleted</th>
 
 
             </tr>
           </thead>
           <tbody>
-            @foreach($cars as $car)
+            @foreach($classes as $classe)
             <tr>
-              <td scope="row">{{$car['cartitle']}}</td>
-              <td>{{$car['price']}}</td>
-              <td>{{Str::limit($car['description'],7)}}</td>
-              <td>{{$car['published'] ? 'Yes':'No'}}</td>
-              <td><a href="{{route('cars.edit',$car['id'])}}">Edit</a></td>
-              <td><a href="{{route('cars.show',$car['id'])}}">Details</a></td>
-
+              <td scope="row">{{$classe['classname']}}</td>
+              <td>{{$classe['capacity']}}</td>
+              <td>{{$classe['is_fulled'] ? 'Yes':'No'}}</td>
+              <td>{{$classe['price']}}</td>
+              <td>{{$classe['time_from']}}</td>
+              <td>{{$classe['time_to']}}</td>
+              <td><a href="{{route('classes.edit',$classe['id'])}}">Edit</a></td>
+              <td><a href="{{route('classes.show',$classe['id'])}}">Details</a></td>
               <td>
-              <a href="{{ route('cars.destroy', $car->id) }}" onclick="event.preventDefault(); if (confirm('Are you sure?')) { document.getElementById('delete-form-{{ $car->id }}').submit(); }">Delete</a>
-              <form id="delete-form-{{ $car->id }}" action="{{ route('cars.destroy', $car->id) }}" method="POST" style="display: none;">
+              <a href="{{ route('classes.destroy', $classe->id) }}" onclick="event.preventDefault(); if (confirm('Are you sure?')) { document.getElementById('delete-form-{{ $classe->id }}').submit(); }">Delete</a>
+              <form id="delete-form-{{ $classe->id }}" action="{{ route('classes.destroy', $classe->id) }}" method="POST" style="display: none;">
                @csrf
               @method('DELETE')
               </form>
               </td>
-
             </tr>
             @endforeach
             
