@@ -33,18 +33,22 @@ class CarController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+{
+    $data = $request->validate([
+        'cartitle' => 'required|string', // Assuming you want unique car titles
+        'description' => 'required|string|max:500',
+        'price' => 'required|numeric|min:0',
+        // 'published' => 'boolean',
+    ]);
 
+    // Handle missing or default published value if needed
+    $data['published'] = isset($data['published']) ? $data['published'] : false;
 
-    Car::create([
-        'cartitle'=>$request->cartitle,
-        'description'=>$request->description,
-        'price'=>$request->price,
-        'published'=>isset($request->published),
-]);
+    Car::create($data);
 
-        return "Data added successfully";
-    }
+    return redirect()->route('cars.index')->with('success', 'Car created successfully');
+}
+    
 
     /**
      * Display the specified resource.
@@ -76,7 +80,7 @@ class CarController extends Controller
         'description'=>$request->description,
         'price'=>$request->price,
         'published'=>isset($request->published),
-];
+        ];
         Car::where('id',$id)->update($data);
         return redirect()->route('cars.index');
         }
@@ -93,5 +97,16 @@ class CarController extends Controller
         $cars=Car::onlyTrashed()->get();
         return view ('deletedcars', compact('cars'));
     }
+    public function restore(string $id){
+        Car::where('id',$id)->restore();
+        return redirect()->route('cars.showDeleted');
+
+    } 
+    public function forceDelete(string $id)
+    {
+        Car::where('id', $id)->forceDelete();
+        return redirect()->route('cars.index');
+    }
+
 
 }

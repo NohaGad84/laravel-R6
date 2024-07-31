@@ -34,7 +34,7 @@
 
               <th scope="col">Time from</th>
               <th scope="col">Time To</th>
-              <th scope="col">Edit</th>
+              <th scope="col">Restore</th>
               <th scope="col">Show</th>
               <th scope="col"> Permenantly Deleted</th>
 
@@ -50,15 +50,20 @@
               <td>{{$classe['price']}}</td>
               <td>{{$classe['time_from']}}</td>
               <td>{{$classe['time_to']}}</td>
-              <td><a href="{{route('classes.edit',$classe['id'])}}">Edit</a></td>
-              <td><a href="{{route('classes.show',$classe['id'])}}">Details</a></td>
-              <td>
-              <a href="{{ route('classes.destroy', $classe->id) }}" onclick="event.preventDefault(); if (confirm('Are you sure?')) { document.getElementById('delete-form-{{ $classe->id }}').submit(); }">Delete</a>
-              <form id="delete-form-{{ $classe->id }}" action="{{ route('classes.destroy', $classe->id) }}" method="POST" style="display: none;">
-               @csrf
-              @method('DELETE')
-              </form>
-              </td>
+              <td><form action="{{route('classes.restore',$classe['id'])}}" method="post">
+                @csrf
+                @method('patch')
+                <button type="submit" class="btn btn-link m-0 p-0">Restore</button>
+               </form></td>
+               <td><a href="{{route('classes.show',$classe['id'])}}">Details</a></td>
+              
+               <td>
+    <form action="{{ route('classes.forceDelete', $classe['id']) }}" method="POST">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-link m-0 p-0">Permanently Delete</button>
+    </form>
+</td>
             </tr>
             @endforeach
             

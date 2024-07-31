@@ -32,7 +32,7 @@
               <th scope="col">Description</th>
               <th scope="col">show</th>
               <th scope="col">Published</th>
-              <th scope="col">Edit</th>
+              <th scope="col">Restore</th>
               <th scope="col">permenantly Deleted</th>
 
 
@@ -45,16 +45,20 @@
               <td>{{$car['price']}}</td>
               <td>{{Str::limit($car['description'],7)}}</td>
               <td>{{$car['published'] ? 'Yes':'No'}}</td>
-              <td><a href="{{route('cars.edit',$car['id'])}}">Edit</a></td>
-              <td><a href="{{route('cars.show',$car['id'])}}">Details</a></td>
-              <td>
-              <a href="{{ route('cars.destroy', $car->id) }}" onclick="event.preventDefault(); if (confirm('Are you sure?')) { document.getElementById('delete-form-{{ $car->id }}').submit(); }">Delete</a>
-              <form id="delete-form-{{ $car->id }}" action="{{ route('cars.destroy', $car->id) }}" method="POST" style="display: none;">
-               @csrf
-              @method('DELETE')
-              </form>
-              </td>
-
+              <td><form action="{{route('cars.restore',$car['id'])}}" method="post">
+                @csrf
+                @method('patch')
+                <button type="submit" class="btn btn-link m-0 p-0">Restore</button>
+               </form></td>
+               <td><a href="{{route('cars.show',$car['id'])}}">Details</a></td>
+              
+               <td>
+    <form action="{{ route('cars.forceDelete', $car['id']) }}" method="POST">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-link m-0 p-0">Permanently Delete</button>
+    </form>
+</td>
             </tr>
             @endforeach
             

@@ -54,6 +54,7 @@
               <form id="delete-form-{{ $car->id }}" action="{{ route('cars.destroy', $car->id) }}" method="POST" style="display: none;">
                @csrf
               @method('DELETE')
+              
               </form>
               </td>
 

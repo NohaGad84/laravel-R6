@@ -13,26 +13,34 @@ Route::post('data1', [ExampleController::class,'receive'])->name('data');
 // Route::get('',function(){
 // return view('hello');
 // });
+Route::prefix('cars')->group(function(){
+  Route::get('',[CarController::class,'index'])->name('cars.index');
+  Route::get('create',[CarController::class,'create']);
+  Route::post('', [CarController::class,'store'])->name('cars.store');
+  Route::get('{car}/edit',[CarController::class,'edit'])->name('cars.edit');
+  Route::put('{car}/update',[CarController::class,'update'])->name('cars.update');
+  Route::get('{car}/show',[CarController::class,'show'])->name('cars.show');
+  Route::delete('{car}', [CarController::class, 'destroy'])->name('cars.destroy');
+  Route::get('deleted', [CarController::class, 'showDeleted'])->name('cars.showDeleted');
+  Route::patch('{id}', [CarController::class, 'restore'])->name('cars.restore');
+  Route::delete('{car}/force-delete', [CarController::class, 'forceDelete'])->name('cars.forceDelete');
+  
+});
 
-Route::get('cars',[CarController::class,'index'])->name('cars.index');
-Route::get('cars/create',[CarController::class,'create']);
-Route::post('cars', [CarController::class,'store'])->name('cars.store');
-Route::get('cars/{id}/edit',[CarController::class,'edit'])->name('cars.edit');
-Route::put('cars/{id}/update',[CarController::class,'update'])->name('cars.update');
-Route::get('cars/{id}/show',[CarController::class,'show'])->name('cars.show');
-Route::delete('cars/{car}', [CarController::class, 'destroy'])->name('cars.destroy');
-Route::get('cars/deleted', [CarController::class, 'showDeleted'])->name('cars.showDeleted');
 
+Route::prefix('classes')->group(function(){
 
-Route::get('classes', [classeController::class,'index'])->name('classes.index');
-Route::get('classes/create', [ClasseController::class,'create']);
-Route::post('classes', [ClasseController::class,'store'])->name('classes.store');
-Route::get('classes/{id}/edit',[ClasseController::class,'edit'])->name('classes.edit');
-Route::put('classes/{id}/update',[classeController::class,'update'])->name('classes.update');
-Route::get('classes/{id}/show',[ClasseController::class,'show'])->name('classes.show');
-Route::delete('classes/{classe}', [ClasseController::class, 'destroy'])->name('classes.destroy');
-Route::get('classes/deleted', [ClasseController::class, 'showDeleted'])->name('classes.showDeleted');
-
+Route::get('', [classeController::class,'index'])->name('classes.index');
+Route::get('create', [ClasseController::class,'create']);
+Route::post('', [ClasseController::class,'store'])->name('classes.store');
+Route::get('{classe}/edit',[ClasseController::class,'edit'])->name('classes.edit');
+Route::put('{classe}/update',[classeController::class,'update'])->name('classes.update');
+Route::get('{classe}/show',[ClasseController::class,'show'])->name('classes.show');
+Route::delete('{classe}', [ClasseController::class, 'destroy'])->name('classes.destroy');
+Route::get('deleted', [ClasseController::class, 'showDeleted'])->name('classes.showDeleted');
+Route::patch('{id}', [ClasseController::class, 'restore'])->name('classes.restore');
+Route::delete('{classe}/force-delete', [ClasseController::class, 'forceDelete'])->name('classes.forceDelete');
+});
 
 // Route::get('/', function () {
 //     return view('welcome');

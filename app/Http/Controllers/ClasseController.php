@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Classe;
@@ -31,30 +30,23 @@ class ClasseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-    //   dd($request);
-    // $classname= 'roses';
-    // $capacity= 20;
-    // $is_fulled= true;
-    // $price= 2000;
-    // $time_from=8;
-    // $time_to=3;
-   
-
-
-Classe::create([
-         'classname'=>$request->classname,
-            'capacity'=>$request->capacity,
-            'is_fulled'=>isset($request->is_fulled),
-            'price'=>$request->price,
-            'time_from'=>$request->time_from,
-            'time_to'=>$request->time_to,
-
-    ]);
+    public function store(Request $request) {
+        $data = $request->validate([
+            'classname' => 'required|string',
+            'capacity' => 'required|integer|min:0',
+            'is_fulled' => 'boolean', // Adjust if checkbox doesn't submit a value by default
+            'price' => 'required|numeric|min:0',
+            'time_from' => 'required|date_format:Y-m-d H:i:s', // Include time for time field
+            'time_to' => 'required|date_format:Y-m-d H:i:s',
+        ]);
     
-    return "Data added successfully";
-        }
+        Log::info('Data to be inserted:', $data);
+
+            Classe::create($data);
+            return redirect()->route('classes.index')->with('success', 'classe created successfully');
+        
+    }
+
 
 
 
@@ -79,20 +71,21 @@ Classe::create([
     /**
      * Update the specified resource in storage.
      */
-     function update(Request $request, string $id)
-    {
-$data=[
-    'classname'=>$request->classname,
-    'capacity'=>$request->capacity,
-    'is_fulled'=>isset($request->is_fulled),
-    'price'=>$request->price,
-    'time_from'=>$request->time_from,
-    'time_to'=>$request->time_to,
+    public function update(Request $request, Classe $classe)
+{
+    $data = $request->validate([
+        'classname' => 'required|string', // Remove unique rule if necessary
+        'capacity' => 'required|integer|min:0|max:100',
+        'is_fulled' => 'boolean',
+        'price' => 'required|numeric|min:0',
+        'time_from' => 'required|date_format:Y-m-d H:i:s',
+        'time_to' => 'required|date_format:Y-m-d H:i:s',
+    ]);
 
-];
-Classe::where('id',$id)->update($data);
-return redirect()->route('classes.index');    }
+    $classe->update($data);
 
+    return redirect()->route('classes.index')->with('success', 'Class updated successfully');
+}
     /**
      * Remove the specified resource from storage.
      */
@@ -105,4 +98,14 @@ return redirect()->route('classes.index');    }
         $classes= Classe::onlyTrashed()->get();
         return view ('deletedclasses', compact('classes'));
     }
+    public function restore(string $id){
+        Classe::where('id',$id)->restore();
+        return redirect()->route('classes.showDeleted');
+
+    }
+    public function forceDelete(string $id)
+{
+    Classe::where('id', $id)->forceDelete();
+    return redirect()->route('classes.index');
+}
 }
