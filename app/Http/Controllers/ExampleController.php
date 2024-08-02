@@ -20,6 +20,9 @@ function receive(Request$request){
 function cv(){
     return view ('cv');
 }
+function uploadForm(){
+    return view ('upload');
+}
 
 
 

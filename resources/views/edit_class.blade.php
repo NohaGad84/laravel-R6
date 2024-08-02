@@ -30,36 +30,54 @@
           <div class="form-group mb-3 row">
             <label for="" class="form-label col-md-2 fw-bold text-md-end">Class Name:</label>
             <div class="col-md-10">
-              <input type="text" placeholder="class name" class="form-control py-2" name ="classname" value="{{$classe->classname}}" />
+              <input type="text" placeholder="class name" class="form-control py-2" name ="classname" value="{{old('classname', $classe['classname'])}}" />
+              @error('classname')
+        <div class="alert alert-warning">{{$message}}</div>
+        @enderror
             </div>
           </div>
           <div class="form-group mb-3 row">
     <label for="" class="form-label col-md-2 fw-bold text-md-end">Capacity:</label>
     <div class="col-md-10">
-        <input type="number" placeholder="Enter capacity" class="form-control py-2" name="capacity" value=" {{$classe->capacity}}"/>
-    </div>
+        <input type="number" placeholder="Enter capacity" class="form-control py-2" name="capacity" value="{{old('capacity', $classe['capacity'])}}"/>
+        @error('capacity')
+        <div class="alert alert-warning">{{$message}}</div>
+        @enderror
+      </div>
 </div>
           <div class="form-group mb-3 row">
             <label for="" class="form-label col-md-2 fw-bold text-md-end">Is Fulled</label>
             <div class="col-md-10">
-              <input type="checkbox"  name="is_fulled" class="form-check-input" style="padding: 0.7rem;" @checked($classe->is_fulled)  />
+              <input type="checkbox"  name="is_fulled" class="form-check-input" style="padding: 0.7rem;"@checked(old('is_fulled')) />
+              @error('is_fulled')
+        <div class="alert alert-warning">{{$message}}</div>
+        @enderror
             </div>
           <hr>
           <div class="form-group mb-3 row">
     <label for="" class="form-label col-md-2 fw-bold text-md-end">Price</label>
     <div class="col-md-10">
-        <input type="number" name="price" class="form-control py-2" value="{{$classe->price}}" />
-    </div>
+        <input type="number" name="price" class="form-control py-2" value="{{old('price', $classe['price'])}}" />
+        @error('price')
+        <div class="alert alert-warning">{{$message}}</div>
+        @enderror
+      </div>
 </div>
           <div class="form-group mb-3 row">
             <label for="" class="form-label col-md-2 fw-bold text-md-end">Time from</label>
             <div class="col-md-10">
-              <input type="time" step="0.1" placeholder="Enter time" class="form-control py-2" name="time_from" value="{{$classe->time_from}}" />
+              <input type="time"  placeholder="Enter time" class="form-control py-2" name="time_from" value="{{old('time_from', $classe['time_from'])}}" />
+              @error('time_from')
+        <div class="alert alert-warning">{{$message}}</div>
+        @enderror
             </div>
             <div class="form-group mb-3 row">
             <label for="" class="form-label col-md-2 fw-bold text-md-end">Time to</label>
             <div class="col-md-10">
-              <input type="time" step="0.1" placeholder="Enter time" class="form-control py-2" name="time_to" value="{{$classe->time_to}}"/>
+              <input type="time"  placeholder="Enter time" class="form-control py-2" name="time_to" value="{{old('time_to', $classe['time_to'])}}"/>
+              @error('time_to')
+        <div class="alert alert-warning">{{$message}}</div>
+        @enderror
             </div>
           <div class="text-md-end">
             <button class="btn mt-4 btn-secondary text-white fs-5 fw-bold border-0 py-2 px-md-5">

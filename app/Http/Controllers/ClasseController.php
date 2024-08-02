@@ -34,14 +34,13 @@ class ClasseController extends Controller
         $data = $request->validate([
             'classname' => 'required|string',
             'capacity' => 'required|integer|min:0',
-            'is_fulled' => 'boolean', // Adjust if checkbox doesn't submit a value by default
+            // 'is_fulled' => 'boolean', 
             'price' => 'required|numeric|min:0',
-            'time_from' => 'required|date_format:Y-m-d H:i:s', // Include time for time field
-            'time_to' => 'required|date_format:Y-m-d H:i:s',
+            'time_from' => 'required|date_format:H:i', 
+            'time_to' => 'required|date_format:H:i|after:time_from',
         ]);
     
-        Log::info('Data to be inserted:', $data);
-
+$data['is_fulled'] = isset($request['is_fulled']);
             Classe::create($data);
             return redirect()->route('classes.index')->with('success', 'classe created successfully');
         
@@ -74,7 +73,7 @@ class ClasseController extends Controller
     public function update(Request $request, Classe $classe)
 {
     $data = $request->validate([
-        'classname' => 'required|string', // Remove unique rule if necessary
+        'classname' => 'required|string', 
         'capacity' => 'required|integer|min:0|max:100',
         'is_fulled' => 'boolean',
         'price' => 'required|numeric|min:0',

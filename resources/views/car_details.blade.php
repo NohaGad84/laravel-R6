@@ -9,12 +9,23 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
   <style>
     * {
       font-family: "Lato", sans-serif;
+    }
+    .car-image {
+      position: relative;
+      overflow: hidden;
+    }
+    .car-image img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      transition: transform 0.2s; /* Adds a slight zoom effect on hover */
+    }
+    .car-image:hover img {
+      transform: scale(1.05); /* Zoom effect */
     }
   </style>
 </head>
@@ -25,33 +36,31 @@
       <div class="bg-light p-5 rounded">
         <div class="card bg-light border-0">
           <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-6 col-10 position-relative overflow-hidden">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROYjj94a1EKPObxDQCbqSdwmIbkhQt5Np5lQ&s"
-                alt="" class="card-img"
-                style="position: absolute; margin: auto; top: 50%; transform: translateY(-50%); width: 100%;height: 100%; object-fit: cover;" />
+            <div class="col-lg-4 col-md-6 col-10 car-image">
+              <img src="{{ asset($car->image) }}" alt="Car Image" class="img-fluid" />
             </div>
             <div class="col-lg-8 col-md-6 col-12 card-body">
               <div class="mb-4 text-center py-2">
-                <h2 class="fw-bold bg-light card-header">{{$car->cartitle}}</h2>
+                <h2 class="fw-bold bg-light card-header">{{ $car->cartitle }}</h2>
               </div>
               <div class="mb-4">
                 <p class="card-text">
-                  <span class="fw-bold">Price:</span> {{$car->price}}$
+                  <span class="fw-bold">Price:</span> {{ $car->price }}$
                 </p>
               </div>
               <div class="mb-4">
                 <p class="card-text">
-                  <span class="fw-bold">Published:</span> {{$car->published? 'Yes' :'No'}}
+                  <span class="fw-bold">Published:</span> {{ $car->published ? 'Yes' : 'No' }}
                 </p>
               </div>
               <div class="mb-4">
                 <p class="card-text">
-                  <span class="fw-bold">Description:</span><br>{{$car->description}}
+                  <span class="fw-bold">Description:</span><br>{{ $car->description }}
                 </p>
               </div>
               <div class="text-md-end">
-                <a href="{{route('cars.index')}}" class="btn mt-4 btn-primary text-white fs-5 fw-bold border-0 py-2 px-md-5">
-                  Back to All cars
+                <a href="{{ route('cars.index') }}" class="btn mt-4 btn-primary text-white fs-5 fw-bold border-0 py-2 px-md-5">
+                  Back to All Cars
                 </a>
               </div>
             </div>
@@ -61,8 +70,8 @@
     </div>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 </html>

@@ -24,8 +24,11 @@ Route::prefix('cars')->group(function(){
   Route::get('deleted', [CarController::class, 'showDeleted'])->name('cars.showDeleted');
   Route::patch('{id}', [CarController::class, 'restore'])->name('cars.restore');
   Route::delete('{car}/force-delete', [CarController::class, 'forceDelete'])->name('cars.forceDelete');
-  
+  Route::patch('/car/{id}', [CarController::class, 'update']);
+
 });
+Route::get('uploadForm',[ExampleController::class,'uploadForm']);
+Route::post('upload',[ExampleController::class,'upload'])->name('upload');
 
 
 Route::prefix('classes')->group(function(){

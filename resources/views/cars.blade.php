@@ -30,9 +30,9 @@
               <th scope="col">Car Title</th>
               <th scope="col">Price</th>
               <th scope="col">Description</th>
-              <th scope="col">show</th>
               <th scope="col">Published</th>
               <th scope="col">Edit</th>
+              <th scope="col">show</th>
 
               <th scope="col">Delete</th>
 
