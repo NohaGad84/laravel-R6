@@ -27,7 +27,7 @@ class CarController extends Controller
      */
     public function create()
 {
-    $cars = Car::all(); // Fetch all cars
+    $cars = Car::all(); 
     return view('add_car', compact('cars'));
 }
 

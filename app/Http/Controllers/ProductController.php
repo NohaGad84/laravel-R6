@@ -11,16 +11,15 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::get();
+        $products = Product::latest()->take(3)->get();
     
-        return view('products_home', compact('products'));
+        return view('home', compact('products'));
     }
     
 
     public function create()
     {
-        $products = Product::all();
-        return view('add_product', compact('products'));
+        return view('add_product');
     }
 
     public function store(Request $request)
@@ -32,11 +31,11 @@ class ProductController extends Controller
             'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         $data['published'] = $request->has('published');
-        $data['image'] = $this->uploadFile($request->image, 'assets/images/product');
+        $data['image'] = $this->uploadFile($request->image, 'assets/images');
 
 
         Product::create($data);
 
-        return redirect()->route('products.index')->with('success', 'Product created successfully');
+        return redirect()->route('products.index');
     }
 }

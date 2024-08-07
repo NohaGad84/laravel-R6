@@ -312,6 +312,7 @@ https://www.tooplate.com/view/2127-little-fashion
                         <div class="col-12 text-center">
                             <h2 class="mb-5">Featured Products</h2>
                         </div>
+                        @foreach($products as $product)
 
                         <div class="col-lg-4 col-12 mb-3">
                             <div class="product-thumb">
@@ -324,33 +325,22 @@ https://www.tooplate.com/view/2127-little-fashion
 
                                     <a href="#" class="bi-heart-fill product-icon"></a>
                                 </div>
-                                @foreach($products as $product)
+
                                 <div class="product-info d-flex">
                                     <div>
                                         <h5 class="product-title mb-0">
-                                            <a href="product-detail.html" class="product-title-link">{{$product['title']}}</a>
+                                            <a href="product-detail.html" class="product-title-link">{{ $product->title }}</a>
                                         </h5>
 
-                                        <p class="product-p">{{$product['description']}}</p>
+                                        <p class="product-p">{{ $product->description}}</p>
                                     </div>
 
-                                    <small class="product-price text-muted ms-auto mt-auto mb-5">${{$product['price']}}</small>
+                                    <small class="product-price text-muted ms-auto mt-auto mb-5">${{ $product->price }}</small>
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="col-lg-4 col-12 mb-3">
-                            <div class="product-thumb">
-                                <a href="product-detail.html">
-                                    <img src=" {{asset('assets/images/product/jordan-nix-CkCUvwMXAac-unsplash.jpeg')}}" class="img-fluid product-image" alt="">
-                                </a>
+                        @endforeach
 
-                                <div class="product-top d-flex">
-                                    <span class="product-alert">Low Price</span>
-
-                                    <a href="#" class="bi-heart-fill product-icon ms-auto"></a>
-                                </div>
-                                @endforeach
                                
 
                         <div class="col-12 text-center">
