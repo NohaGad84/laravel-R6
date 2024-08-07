@@ -13,6 +13,7 @@ Route::get('/products/create', [ProductController::class, 'create'])->name('prod
 Route::get('/logintask', [ExampleController::class,'logintask']);
 Route::post('data1', [ExampleController::class,'receive'])->name('data');
 Route::get('index', [ExampleController::class,'index']);
+Route::get('about', [ExampleController::class,'about']);
 
 // Route::get('cv', [ExampleController::class,'cv']);
 

@@ -30,7 +30,9 @@ public function index(){
 }
 
 
-
+public function about(){
+    return view ('about');
+}
 
 
 
