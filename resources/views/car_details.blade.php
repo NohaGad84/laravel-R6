@@ -37,7 +37,7 @@
         <div class="card bg-light border-0">
           <div class="row justify-content-center">
             <div class="col-lg-4 col-md-6 col-10 car-image">
-              <img src="{{ asset($car->image) }}" alt="Car Image" class="img-fluid" />
+              <img src="{{ asset('assets/images/'.$car->image) }}" alt="Car Image" class="img-fluid" />
             </div>
             <div class="col-lg-8 col-md-6 col-12 card-body">
               <div class="mb-4 text-center py-2">

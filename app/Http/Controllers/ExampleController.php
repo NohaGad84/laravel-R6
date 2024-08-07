@@ -25,6 +25,9 @@ function uploadForm(){
 }
 
 
+public function index(){
+    return view ('index');
+}
 
 
 

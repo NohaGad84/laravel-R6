@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Car;
-
 use Illuminate\Http\RedirectResponse;
+use App\Traits\Common;
 
 class CarController extends Controller
 {
+    use Common;
     /**
      * Display a listing of the resource.
      */
@@ -39,13 +40,12 @@ class CarController extends Controller
         'cartitle' => 'required|string', 
         'description' => 'required|string|max:500',
         'price' => 'required|numeric|min:0',
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
     ]);
+    $data['published']= isset($request->published);
+
     
-    $data['published'] = isset($data['published']) ? $data['published'] : false;
-    $imagePath = $request->file('image')->store('assets/images');
-    
-    $data['image'] = $imagePath; // Assign the stored image path to the data array
+    $data['image'] = $this->uploadFile($request->image, 'assets/images');
     Car::create($data);
 
     return redirect()->route('cars.index')->with('success', 'Car created successfully');
@@ -82,28 +82,21 @@ class CarController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Car $car)
+    public function update(Request $request, string $id)
 {
     $data = $request->validate([
         'cartitle' => 'required|string',
         'description' => 'required|string|max:500',
         'price' => 'required|numeric|min:0',
         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'published' => 'boolean',
     ]);
 
-    // Retain existing image if no new upload
     if ($request->hasFile('image')) {
-        // Handle new upload
-        $file_extension = $request->image->getClientOriginalExtension();
-        $file_name = time() . '.' . $file_extension;
-        $request->image->move('assets/images', $file_name);
-        $data['image'] = 'assets/images/' . $file_name; // Update with new image path
-    } else {
-        $data['image'] = $car->image; // Keep existing image
+        $data['image'] = $this->uploadFile($request->image, 'assets/images');
     }
+        $data['published']= isset($request->published);
+        Car::where('id', $id)->update($data);
 
-    $car->update($data);
     return redirect()->route('cars.index')->with('success', 'Car updated successfully.');
 }
 
@@ -135,6 +128,10 @@ class CarController extends Controller
         $file_name = time() . '.' . $file_extension;
         $path = 'assets/images';
         $request->image->move($path, $file_name);
-        return 'Uploaded';
+       $data['published']= isset($request->published);
+       $data['image']=$file_name;
+        Car::create($data);
+        return redirect()->route('cars.index');
+
     }
 }
