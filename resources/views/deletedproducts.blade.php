@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>All products</title>
+  <title>All Car</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,13 +27,13 @@
         <table class="table table-hover">
           <thead>
             <tr class="table-dark">
-              <th scope="col"> Title</th>
+              <th scope="col">product Title</th>
               <th scope="col">Price</th>
               <th scope="col">Description</th>
-              <th scope="col">Published</th>
-              <th scope="col">Edit</th>
               <th scope="col">show</th>
-              <th scope="col">Delete</th>
+              <th scope="col">Published</th>
+              <th scope="col">Restore</th>
+              <th scope="col">permenantly Deleted</th>
 
 
             </tr>
@@ -41,22 +41,24 @@
           <tbody>
             @foreach($products as $product)
             <tr>
-              <td scope="row">{{$product['title']}}</td>
-              <td>{{$product['price']}}</td>
+              <td scope="row">{{$car['title']}}</td>
+              <td>{{$car['price']}}</td>
               <td>{{Str::limit($product['description'],7)}}</td>
-              <td>{{$product['published'] ? 'Yes':'No'}}</td>
-              <td><a href="{{route('products.edit',$product['id'])}}">Edit</a></td>
-              <td><a href="{{route('products.show',$product['id'])}}">Details</a></td>
-
-              <!-- <td>
-              <a href="{{ route('products.destroy', $product->id) }}" onclick="event.preventDefault(); if (confirm('Are you sure?')) { document.getElementById('delete-form-{{ $product->id }}').submit(); }">Delete</a>
-              <form id="delete-form-{{ $product->id }}" action="{{ route('products.destroy', $product->id) }}" method="POST" style="display: none;">
-               @csrf
-              @method('DELETE') -->
+              <td>{{$car['published'] ? 'Yes':'No'}}</td>
+              <td><form action="{{route('products.restore',$product['id'])}}" method="post">
+                @csrf
+                @method('patch')
+                <button type="submit" class="btn btn-link m-0 p-0">Restore</button>
+               </form></td>
+               <td><a href="{{route('products.show',$product['id'])}}">Details</a></td>
               
-              </form>
-              </td>
-
+               <td>
+    <form action="{{ route('products.forceDelete', $product['id']) }}" method="POST">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-link m-0 p-0">Permanently Delete</button>
+    </form>
+</td>
             </tr>
             @endforeach
             

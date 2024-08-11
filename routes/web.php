@@ -6,9 +6,21 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\ClasseController;
 
 use App\Http\Controllers\ProductController;
-Route::get('/products/home', [ProductController::class, 'index'])->name('products.index');
-Route::post('/products', [ProductController::class, 'store'])->name('products.store');
-Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+
+Route::prefix('products')->controller(ProductController::class)->as('products.')->group(function(){
+
+Route::get('', 'index')->name('index');
+Route::post('', 'store')->name('store');
+Route::get('create', 'create')->name('create');
+Route::patch('{product}/edit','edit')->name('edit');
+  Route::put('{product}/update','update')->name('update');
+  // Route::get('{product}/show','show')->name('show');
+  // Route::delete('{product}',  'destroy')->name('destroy');
+  // Route::get('deleted',  'showDeleted')->name('showDeleted');
+  // Route::patch('{id}',  'restore')->name('restore');
+  // Route::delete('{product}/force-delete', 'forceDelete')->name('forceDelete');
+  // Route::patch('/product/{id}',  'update');
+});
 
 Route::get('/logintask', [ExampleController::class,'logintask']);
 Route::post('data1', [ExampleController::class,'receive'])->name('data');
@@ -25,7 +37,7 @@ Route::prefix('cars')->controller(CarController::class)->as('cars.')->group(func
  Route::get('','index')->name('index');
   Route::get('create','create');
   Route::post('', 'store')->name('store');
-  Route::get('{car}/edit','edit')->name('edit');
+  Route::patch('{car}/edit','edit')->name('edit');
   Route::put('{car}/update','update')->name('update');
   Route::get('{car}/show','show')->name('show');
   Route::delete('{car}',  'destroy')->name('destroy');
