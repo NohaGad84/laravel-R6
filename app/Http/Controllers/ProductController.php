@@ -36,7 +36,7 @@ class ProductController extends Controller
             'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         $data['published'] = $request->has('published');
-        $data['image'] = $this->uploadFile($request->image, 'assets/images');
+        $data['image'] = $this->uploadFile($request->image, 'assets/images/product');
 
 
         Product::create($data);
@@ -48,11 +48,8 @@ class ProductController extends Controller
     {
         //get data of [product] to be updated
 
-  $product = Product::find($id); // Fetch the product data
-  if (!$product || empty($product->title)) {
-    // Handle missing or empty title
-    return redirect()->back()->with('error', 'product title is missing');
-}
+  $product = Product::findOrFail($id); // Fetch the product data
+ 
 
 
   return view('edit_product', compact('product'));
@@ -71,7 +68,7 @@ class ProductController extends Controller
     ]);
 
     if ($request->hasFile('image')) {
-        $data['image'] = $this->uploadFile($request->image, 'assets/images');
+        $data['image'] = $this->uploadFile($request->image, 'assets/images/product');
     }
         $data['published']= isset($request->published);
         Product::where('id', $id)->update($data);

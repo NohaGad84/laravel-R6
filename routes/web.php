@@ -26,6 +26,7 @@ Route::get('/logintask', [ExampleController::class,'logintask']);
 Route::post('data1', [ExampleController::class,'receive'])->name('data');
 Route::get('index', [ExampleController::class,'index']);
 Route::get('about', [ExampleController::class,'about']);
+Route::get('testonetoone', [ExampleController::class,'test']);
 
 // Route::get('cv', [ExampleController::class,'cv']);
 
@@ -180,3 +181,13 @@ Route::get('login', function () {
 //   return "data submitted successfully";
 
 // })->name('submit');
+Route::get('/download', function (Illuminate\Http\Request $request) {
+  $file = $request->input('file');
+  $path = public_path('assets/images/' . $file);
+
+  if (file_exists($path)) {
+      return response()->download($path);
+  } else {
+      abort(404, 'File not found');
+  }
+});

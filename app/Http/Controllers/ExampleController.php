@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Student;
+use Illuminate\support\Facades\DB;
 
 class ExampleController extends Controller
 {
@@ -33,11 +35,13 @@ public function index(){
 public function about(){
     return view ('about');
 }
-
+public function test(){
+    // dd (student::find(1)?->phone->phone_number);
 
 
 
 function logintask1() {
 
+}
 }
 }

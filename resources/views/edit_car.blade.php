@@ -24,7 +24,7 @@
         <h2 class="fw-bold fs-2 mb-5 pb-2">Edit Car</h2>
         <form action="{{ route('cars.update', $car->id) }}" method="POST" class="px-md-5" enctype="multipart/form-data">
           @csrf
-          @method('PUT')
+          @method('put')
           
           <div class="form-group mb-3 row">
             <label for="cartitle" class="form-label col-md-2 fw-bold text-md-end">Car Title:</label>
@@ -45,6 +45,7 @@
               @enderror
             </div>
           </div>
+          
           
           <div class="form-group mb-3 row">
             <label for="description" class="form-label col-md-2 fw-bold text-md-end">Description:</label>

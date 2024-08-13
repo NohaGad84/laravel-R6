@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Car;
 use Illuminate\Http\RedirectResponse;
 use App\Traits\Common;
+use App\Models\Category;
 
 class CarController extends Controller
 {
@@ -18,8 +19,8 @@ class CarController extends Controller
         //get all cars from database
         //return view all cars , carsdata
         //select.*.from cars;
-        $cars=Car::get();
-        return view ('cars',compact('cars'));
+        $cars = Car::with('category')->get(); // Eager load category
+        return view('cars', compact('cars'));
     }
 
     /**
@@ -27,8 +28,9 @@ class CarController extends Controller
      */
     public function create()
 {
-    $cars = Car::all(); 
-    return view('add_car', compact('cars'));
+    $categories = Category::all(); // Select all categories for better performance
+        return view('add_car', compact('categories'));
+
 }
 
     /**
@@ -41,6 +43,7 @@ class CarController extends Controller
         'description' => 'required|string|max:500',
         'price' => 'required|numeric|min:0',
         'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+'category_id' => 'required|integer|exists:categories,id', 
     ]);
     $data['published']= isset($request->published);
 
@@ -48,7 +51,7 @@ class CarController extends Controller
     $data['image'] = $this->uploadFile($request->image, 'assets/images');
     Car::create($data);
 
-    return redirect()->route('cars.index')->with('success', 'Car created successfully');
+    return redirect()->route('cars.index');
 }
     
 
@@ -57,9 +60,10 @@ class CarController extends Controller
      */
     public function show(string $id)
 {
-    // Fetch the car by id
-    $car = Car::findOrFail($id);
-    return view('car_details', compact('car'));   
+
+    $car = Car::with('category')->findOrFail($id);
+  return view('car_details', compact('car'));
+     
 }
 
     /**
@@ -69,14 +73,9 @@ class CarController extends Controller
     {
         //get data of car to be updated
 
-  $car = Car::find($id); // Fetch the car data
-  if (!$car || empty($car->cartitle)) {
-    // Handle missing or empty cartitle
-    return redirect()->back()->with('error', 'Car title is missing');
-}
-
-
-  return view('edit_car', compact('car'));
+        $car = Car::findOrFail($id);
+        $categories = Category::all();
+        return view('edit_car', compact('car', 'categories'));
     }
 
     /**
@@ -89,15 +88,18 @@ class CarController extends Controller
         'description' => 'required|string|max:500',
         'price' => 'required|numeric|min:0',
         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    ]);
+    'category_id' => 'sometimes|integer|exists:categories,id',  
+   ]);
+
+    $car = Car::findOrFail($id);
 
     if ($request->hasFile('image')) {
         $data['image'] = $this->uploadFile($request->image, 'assets/images');
     }
-        $data['published']= isset($request->published);
-        Car::where('id', $id)->update($data);
 
-    return redirect()->route('cars.index')->with('success', 'Car updated successfully.');
+    $data['published'] = isset($request->published);
+    $car->update($data);
+    return redirect()->route('cars.index');
 }
 
     /**

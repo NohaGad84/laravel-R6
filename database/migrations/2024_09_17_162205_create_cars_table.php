@@ -18,6 +18,8 @@ return new class extends Migration
             $table->float('price');
             $table->boolean('published');
             $table->string('image',100);
+            $table->foreignId('category_id')->constrained('categories');
+
             $table->softDeletes();
             $table->timestamps();
         });
