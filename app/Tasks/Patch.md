@@ -82,6 +82,8 @@ Use code with caution.
 
 In this example, a PUT request to /products/123 would trigger the update method in the ProductController with the product ID of 123. The controller would then update the entire product with the data provided in the request body.
 
+
+
 <h2>Difference Between PUT and PATCH</h2>
 While both PUT and PATCH are used for updating resources, there's a key difference:
 
