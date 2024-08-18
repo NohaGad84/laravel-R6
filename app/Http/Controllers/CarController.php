@@ -19,7 +19,11 @@ class CarController extends Controller
         //get all cars from database
         //return view all cars , carsdata
         //select.*.from cars;
-        $cars = Car::with('category')->get(); // Eager load category
+        // $cars = Car::get();
+        $cars = Car::with('category')->get();
+
+        // dd($cars);
+
         return view('cars', compact('cars'));
     }
 
@@ -28,7 +32,7 @@ class CarController extends Controller
      */
     public function create()
 {
-    $categories = Category::all(); // Select all categories for better performance
+    $categories = Category::select('id','category_name'); // Select all categories for better performance
         return view('add_car', compact('categories'));
 
 }
@@ -48,7 +52,7 @@ class CarController extends Controller
     $data['published']= isset($request->published);
 
     
-    $data['image'] = $this->uploadFile($request->image, 'assets/images');
+    $data['image'] = $this->uploadFile($request->image, 'assets/images/cars');
     Car::create($data);
 
     return redirect()->route('cars.index');
@@ -60,9 +64,10 @@ class CarController extends Controller
      */
     public function show(string $id)
 {
-
-    $car = Car::with('category')->findOrFail($id);
-  return view('car_details', compact('car'));
+    $car = Car::findOrFail($id);
+    $car['image']='assets/images/cars/'.$car['image'];
+    $category = Category::findOrFail($car['category_id']);
+  return view('car_details', compact('car','category'));
      
 }
 
@@ -75,7 +80,9 @@ class CarController extends Controller
 
         $car = Car::findOrFail($id);
         $categories = Category::all();
-        return view('edit_car', compact('car', 'categories'));
+        $categories = Category::select('id','category_name')->get(); // Select all categories for better performance
+
+        return view('edit_car', compact('car','categories'));
     }
 
     /**
@@ -88,13 +95,13 @@ class CarController extends Controller
         'description' => 'required|string|max:500',
         'price' => 'required|numeric|min:0',
         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    'category_id' => 'sometimes|integer|exists:categories,id',  
+    'category_id' => 'required|integer|exists:categories,id',  
    ]);
 
     $car = Car::findOrFail($id);
 
     if ($request->hasFile('image')) {
-        $data['image'] = $this->uploadFile($request->image, 'assets/images');
+        $data['image'] = $this->uploadFile($request->image, 'assets/images/cars');
     }
 
     $data['published'] = isset($request->published);

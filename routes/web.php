@@ -7,12 +7,21 @@ use App\Http\Controllers\ClasseController;
 
 use App\Http\Controllers\ProductController;
 
+Route::get('', function () {
+  return view('welcome');
+});
+
+Route::get('contact-us', [ExampleController::class, 'login']);
+Route::post('contact-us', [ExampleController::class, 'receive'])->name('data');
+
+
+
 Route::prefix('products')->controller(ProductController::class)->as('products.')->group(function(){
 
 Route::get('', 'index')->name('index');
 Route::post('', 'store')->name('store');
 Route::get('create', 'create')->name('create');
-Route::patch('{product}/edit','edit')->name('edit');
+// Route::patch('{product}/edit','edit')->name('edit');
   Route::put('{product}/update','update')->name('update');
   // Route::get('{product}/show','show')->name('show');
   // Route::delete('{product}',  'destroy')->name('destroy');
@@ -33,20 +42,21 @@ Route::get('testonetoone', [ExampleController::class,'test']);
 // Route::get('',function(){
 // return view('hello');
 // });
-Route::prefix('cars')->controller(CarController::class)->as('cars.')->group(function(){
+// Route::resource('cars', 'CarController')->middleware('verified');
+Route::prefix('cars')->controller(CarController::class)->as('cars.')->middleware('verified')->group(function(){
 
  Route::get('','index')->name('index');
   Route::get('create','create');
   Route::post('', 'store')->name('store');
-  Route::patch('{car}/edit','edit')->name('edit');
+  Route::get('{car}/edit','edit')->name('edit');
   Route::put('{car}/update','update')->name('update');
   Route::get('{car}/show','show')->name('show');
   Route::delete('{car}',  'destroy')->name('destroy');
   Route::get('deleted',  'showDeleted')->name('showDeleted');
   Route::patch('{id}',  'restore')->name('restore');
   Route::delete('{car}/force-delete', 'forceDelete')->name('forceDelete');
-  Route::patch('/car/{id}',  'update');
 });
+
 // Route::prefix('cars')->group(function(){
  
 
@@ -181,13 +191,18 @@ Route::get('login', function () {
 //   return "data submitted successfully";
 
 // })->name('submit');
-Route::get('/download', function (Illuminate\Http\Request $request) {
-  $file = $request->input('file');
-  $path = public_path('assets/images/' . $file);
+// Route::get('/download', function (Illuminate\Http\Request $request) {
+//     $file = $request->input('file');
+//     $path = public_path('assets/images/' . $file);
 
-  if (file_exists($path)) {
-      return response()->download($path);
-  } else {
-      abort(404, 'File not found');
-  }
-});
+//     if (file_exists($path)) {
+//         return response()->download($path);
+//     } else {
+//         abort(404, 'File not found');
+//     }
+// });
+
+Auth::routes(['verify' => true]);
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+

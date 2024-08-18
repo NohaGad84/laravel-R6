@@ -57,10 +57,10 @@
               <select name="category_id" id="category_id" class="form-control">
                 <option value="">Select Category</option>
                 @foreach($categories as $category)
- <option value="{{ old('$category_id') }}">{{$category->category_name}}</option>
+                <option value="{{$category->id}}" @selected(old('category_id') == $category->id)>{{$category->category_name}}</option>
   @endforeach
               </select>
-              @error('category')
+              @error('category_id')
               <div class="alert   
  alert-warning">{{$message}}</div>
               @enderror
