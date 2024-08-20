@@ -29,30 +29,31 @@
     <div class="container my-5">
         <div class="py-5 px-md-5 px-1  rounded-1 mx-md-5" style="background-color: #fffffff2;">
             <h2 class="fw-bold fs-1 mb-3 pb-2 text-center">Contact Us</h2>
-            <form action="{{route}}" method="post">
+            <form action="" method="post">
+                @csrf
                 <div class="form-group mb-3 row">
                     <label for="" class="form-label col-md-2 fw-bold text-md-end">Name:</label>
                     <div class="col-md-10">
-                        <input type="text" placeholder="e.g. Jhon Doe" class="form-control py-2" />
+                        <input type="text" placeholder="e.g. Jhon Doe" class="form-control py-2" name="name" />
                     </div>
                 </div>
                 <div class="form-group mb-3 row">
                     <label for="" class="form-label col-md-2 fw-bold text-md-end">Email:</label>
                     <div class="col-md-10">
-                        <input type="email" placeholder="e.g. example@example.com" class="form-control py-2" />
+                        <input type="email" placeholder="e.g. example@example.com" class="form-control py-2"name="email" />
                     </div>
                 </div>
                 <div class="form-group mb-3 row">
                     <label for="" class="form-label col-md-2 fw-bold text-md-end">Subject:</label>
                     <div class="col-md-10">
-                        <input type="text" placeholder="Enter subject" class="form-control py-2" />
+                        <input type="text" placeholder="Enter subject" class="form-control py-2" name="subject" />
                     </div>
                 </div>
                 <hr>
                 <div class="form-group mb-3 row">
                     <label for="" class="form-label col-12 fw-bold">Message:</label>
                     <div class="col-12">
-                        <textarea name="" id="" class="form-control" rows="8" style="padding: 0.7rem;"></textarea>
+                        <textarea name="message" id="" class="form-control" rows="8" style="padding: 0.7rem;"></textarea>
                     </div>
                 </div>
                 <div class="mb-3">

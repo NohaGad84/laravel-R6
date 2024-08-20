@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ClasseController;
-
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProductController;
 
 Route::get('', function () {
@@ -205,4 +205,6 @@ Route::get('login', function () {
 Auth::routes(['verify' => true]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('contact_us', [ContactController::class, 'contactform'])->name('contactform');
+Route::post('contact_us', [ContactController::class, 'sendemail'])->name('sendemail');
 
