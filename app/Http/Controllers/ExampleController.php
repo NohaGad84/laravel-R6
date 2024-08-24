@@ -9,6 +9,7 @@ use Illuminate\support\Facades\DB;
 class ExampleController extends Controller
 {
  function login(){
+    // session()->put('test', 'First Laravel session');
     return view('login');
 }
 function logintask(){

@@ -43,19 +43,26 @@ Route::get('testonetoone', [ExampleController::class,'test']);
 // return view('hello');
 // });
 // Route::resource('cars', 'CarController')->middleware('verified');
-Route::prefix('cars')->controller(CarController::class)->as('cars.')->middleware('verified')->group(function(){
+Route::group(
+  [
+    'prefix' => LaravelLocalization::setLocale(),
+    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+  ], function(){
+     Route::prefix('cars')->controller(CarController::class)->as('cars.')->group(function(){
 
- Route::get('','index')->name('index');
-  Route::get('create','create');
-  Route::post('', 'store')->name('store');
-  Route::get('{car}/edit','edit')->name('edit');
-  Route::put('{car}/update','update')->name('update');
-  Route::get('{car}/show','show')->name('show');
-  Route::delete('{car}',  'destroy')->name('destroy');
-  Route::get('deleted',  'showDeleted')->name('showDeleted');
-  Route::patch('{id}',  'restore')->name('restore');
-  Route::delete('{car}/force-delete', 'forceDelete')->name('forceDelete');
-});
+    Route::get('','index')->name('index');
+     Route::get('create','create');
+     Route::post('', 'store')->name('store');
+     Route::get('{car}/edit','edit')->name('edit');
+     Route::put('{car}/update','update')->name('update');
+     Route::get('{car}/show','show')->name('show');
+     Route::delete('{car}',  'destroy')->name('destroy');
+     Route::get('deleted',  'showDeleted')->name('showDeleted');
+     Route::patch('{id}',  'restore')->name('restore');
+     Route::delete('{car}/force-delete', 'forceDelete')->name('forceDelete');
+   });
+   
+  });
 
 // Route::prefix('cars')->group(function(){
  
