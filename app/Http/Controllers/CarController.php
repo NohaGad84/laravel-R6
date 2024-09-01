@@ -32,8 +32,12 @@ class CarController extends Controller
      */
     public function create()
 {
-    $categories = Category::select('id','category_name'); // Select all categories for better performance
-        return view('add_car', compact('categories'));
+{
+    $car = new Car();  // Create an empty Car object
+
+}
+$categories = Category::all();
+    return view('add_car', compact('categories'));
 
 }
 
